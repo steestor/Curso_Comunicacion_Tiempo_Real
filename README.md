@@ -1,1 +1,1 @@
-# Curso_Comunicaci-n_Tiempo_Real
+# Curso_Comunicación_Tiempo_Real
