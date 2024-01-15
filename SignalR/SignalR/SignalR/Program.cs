@@ -41,5 +41,4 @@ app.UseEndpoints(endpoints =>
     endpoints.MapHub<MessageHub>("/hubConnection");
 });
 
-
 app.Run();

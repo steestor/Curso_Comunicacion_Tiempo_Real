@@ -1,0 +1,29 @@
+<div
+  class="d-flex justify-content-center align-items-center"
+  style="height: 100vh"
+>
+  <div class="dx-card">
+    <div class="row m-4 justify-content-center">
+      Todos los visitantes de esta página verán mensajes entre ellos.
+      {{ uniqueId }}
+    </div>
+
+    <div class="row d-flex justify-content-center mb-2">
+      <div *ngFor="let msg of messages" class="col-10">
+        <dx-text-box [value]="msg" [readOnly]="true"></dx-text-box>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-8 ms-3">
+        <dx-text-box
+          [(ngModel)]="newMessage"
+          placeholder="Escribe tu mensaje..."
+        ></dx-text-box>
+      </div>
+      <div class="col-3">
+        <dx-button (click)="sendMessage()" text="Enviar"></dx-button>
+      </div>
+    </div>
+  </div>
+</div>
