@@ -1,12 +1,20 @@
+// nodemon server.js
+
 const express = require("express");
-const cors = require("cors"); // Importa el paquete cors
+const cors = require("cors");
 const app = express();
 const PORT = 3000;
 
 let messages = [];
 let subscribers = [];
 
-// Utiliza cors como middleware
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+  res.setHeader("Access-Control-Allow-Headers", "*");
+  next();
+});
+
 app.use(cors());
 
 app.use(express.static("public"));
@@ -21,11 +29,9 @@ app.get("/messages", cors(corsOption), (req, res) => {
 
   const waitForMessages = () => {
     if (messages.length > 0) {
-      messages = [];
-      subscribers = [];
       res.json({ messages });
-    } else {
-      setTimeout(waitForMessages, 1000); // Long Polling timeout
+      subscribers = [];
+      messages = [];
     }
   };
 
@@ -44,13 +50,14 @@ app.get("/messagesTimeOut", cors(corsOption), (req, res) => {
 app.post("/sendMessage", express.json(), (req, res) => {
   const { message } = req.body;
   messages.push(message);
-  //subscribers[subscribers.length + 1] = res;
 
+  console.log("Messages: ", messages);
   subscribers.forEach((resSubs) => {
     resSubs.send({ messages });
   });
 
   subscribers = [];
+  messages = [];
 
   res.send("Message received");
 });

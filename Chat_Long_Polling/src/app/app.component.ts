@@ -1,10 +1,16 @@
 import { CommonModule } from '@angular/common';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, OnInit, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
-import { DxButtonModule, DxTextBoxModule } from 'devextreme-angular';
-import { firstValueFrom, lastValueFrom } from 'rxjs';
+import notify from 'devextreme/ui/notify';
+import {
+  DxButtonModule,
+  DxTextBoxComponent,
+  DxTextBoxModule,
+} from 'devextreme-angular';
+import { firstValueFrom } from 'rxjs';
+import { avatares } from './data/avatar';
 
 @Component({
   selector: 'app-root',
@@ -21,24 +27,27 @@ import { firstValueFrom, lastValueFrom } from 'rxjs';
 })
 export class AppComponent implements OnInit {
   private http = inject(HttpClient);
+  @ViewChild('messageBox') messageBox!: DxTextBoxComponent;
 
-  messages: string[] = [];
+  messages: any[] = [];
   newMessage = '';
-  uniqueId = '';
-  headers = new HttpHeaders({
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
-  });
+  avatarSrc = '';
+  user = '';
+  urlBaseBack = 'http://localhost:3000/';
 
   ngOnInit() {
     this.pollForMessages();
-    this.uniqueId = Math.random().toString(36).substr(2, 9);
+    this.prepareVariables();
   }
 
   pollForMessages() {
     firstValueFrom(
-      this.http.get<any>('http://localhost:3000/messages', {
-        headers: this.headers,
+      this.http.get<any>(this.urlBaseBack + 'messages', {
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
+          'Access-Control-Allow-Headers': '*',
+        },
       })
     )
       .then((res) => {
@@ -50,19 +59,44 @@ export class AppComponent implements OnInit {
         if (err.status == 502) {
           this.pollForMessages();
         } else {
-          alert('Se ha producido un error');
+          this.toast('Se ha producido un error', 'error');
           this.pollForMessages();
         }
       });
   }
 
-  sendMessage() {
+  private prepareVariables() {
+    this.avatarSrc = avatares[Math.floor(Math.random() * avatares.length)];
+    this.user = 'User_' + Math.floor(Math.random() * 1000);
+  }
+
+  sendMessage(e: any, messageBox: any) {
     if (this.newMessage) {
       this.http
-        .post('http://localhost:3000/sendMessage', {
-          message: this.newMessage,
+        .post(this.urlBaseBack + 'sendMessage', {
+          message: {
+            avatar: this.avatarSrc,
+            message: this.newMessage,
+            date: new Date(),
+            user: this.user,
+          },
         })
         .subscribe((res) => {});
+      this.messageBox.instance.reset();
     }
+  }
+
+  private toast(
+    message: string,
+    type: string,
+    position: string = 'bottom center'
+  ) {
+    notify({
+      message: message,
+      type,
+      displayTime: 5000,
+      position,
+      width: 'auto',
+    });
   }
 }
