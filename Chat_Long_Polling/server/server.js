@@ -24,9 +24,10 @@ var corsOption = function (req, callback) {
 };
 
 app.get("/messages", cors(corsOption), (req, res) => {
-  let id = subscribers.length + 1;
-  subscribers[id] = res;
+  subscribers[subscribers.length + 1] = res;
 
+  // Función que se encarga de enviar mensajes a los clientes que
+  // estén suscritos cuando haya mensajes en el servidor
   const waitForMessages = () => {
     if (messages.length > 0) {
       res.json({ messages });
@@ -35,6 +36,9 @@ app.get("/messages", cors(corsOption), (req, res) => {
     }
   };
 
+  // Se invoca inmediatamente después de definir la función, 
+  // lo que significa que intentará enviar mensajes disponibles 
+  // tan pronto como alguien se suscriba.
   waitForMessages();
 });
 

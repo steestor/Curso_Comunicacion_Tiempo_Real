@@ -3,14 +3,17 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
-import notify from 'devextreme/ui/notify';
 import {
   DxButtonModule,
+  DxPopupModule,
+  DxSwitchModule,
   DxTextBoxComponent,
   DxTextBoxModule,
 } from 'devextreme-angular';
+import notify from 'devextreme/ui/notify';
 import { firstValueFrom } from 'rxjs';
-import { avatares } from './data/avatar';
+import { avataresFemale, avataresMale } from './data/avatar';
+//import { avatares } from './data/avatar';
 
 @Component({
   selector: 'app-root',
@@ -21,6 +24,8 @@ import { avatares } from './data/avatar';
     DxButtonModule,
     DxTextBoxModule,
     FormsModule,
+    DxPopupModule,
+    DxSwitchModule,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
@@ -30,14 +35,27 @@ export class AppComponent implements OnInit {
   @ViewChild('messageBox') messageBox!: DxTextBoxComponent;
 
   messages: any[] = [];
+  initPage = true;
+  switchValue = true;
   newMessage = '';
   avatarSrc = '';
   user = '';
   urlBaseBack = 'http://localhost:3000/';
 
   ngOnInit() {
-    this.pollForMessages();
     this.prepareVariables();
+  }
+
+  initChat() {
+    this.initPage = false;
+    if (this.switchValue) {
+      this.avatarSrc =
+        avataresFemale[Math.floor(Math.random() * avataresFemale.length)];
+    } else {
+      this.avatarSrc =
+        avataresMale[Math.floor(Math.random() * avataresMale.length)];
+    }
+    this.pollForMessages();
   }
 
   pollForMessages() {
@@ -66,8 +84,7 @@ export class AppComponent implements OnInit {
   }
 
   private prepareVariables() {
-    this.avatarSrc = avatares[Math.floor(Math.random() * avatares.length)];
-    this.user = 'User_' + Math.floor(Math.random() * 1000);
+    //this.avatarSrc = avatares[Math.floor(Math.random() * avatares.length)];
   }
 
   sendMessage(e: any, messageBox: any) {

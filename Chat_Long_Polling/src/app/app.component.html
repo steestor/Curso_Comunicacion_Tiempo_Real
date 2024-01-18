@@ -1,10 +1,52 @@
 <div class="background">
   <div class="title-web">Chat con Long Polling</div>
 
+  @if(initPage){
+  <dx-popup
+    [width]="300"
+    [height]="205"
+    [showTitle]="true"
+    title="Credenciales de usuario"
+    [dragEnabled]="false"
+    [hideOnOutsideClick]="false"
+    [showCloseButton]="false"
+    [visible]="initPage"
+  >
+    <div>
+      <div class="row mb-2">
+        <dx-text-box
+          #userBox
+          [(ngModel)]="user"
+          placeholder="Nombre de Usuario"
+        ></dx-text-box>
+      </div>
+      <div class="row mb-2">
+        <div class="col-12">
+          <dx-switch
+            [value]="switchValue"
+            switchedOnText="Mujer"
+            switchedOffText="Hombre"
+            width="100"
+            (onValueChanged)="switchValue = $event.value"
+          ></dx-switch>
+        </div>
+      </div>
+      <div class="row">
+        <dx-button
+          (click)="initChat()"
+          text="Entrar"
+          type="default"
+        ></dx-button>
+      </div>
+    </div>
+  </dx-popup>
+
+  } @else{
   <div class="d-flex justify-content-center align-items-center">
     <div class="dx-card">
       <div class="row m-4 justify-content-center superior-card">
-        Todos los visitantes de esta página verán mensajes entre ellos.
+        ¡Hola {{ user }}! Recuerda que todos los visitantes de esta página verán
+        mensajes entre ellos.
       </div>
 
       <div
@@ -52,4 +94,5 @@
       </div>
     </div>
   </div>
+  }
 </div>
