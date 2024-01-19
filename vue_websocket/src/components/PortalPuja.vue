@@ -1,19 +1,18 @@
 <template>
-  <div v-for="(product, index) in productsAuction" :key="index" class="d-inline-block justify-content-center">
+  <div v-for="(product, index) in productsPuja" :key="index" class="d-inline-block justify-content-center">
     <CardInfo :product="product" @sendMessage="sendMessage"></CardInfo>
   </div>
 </template>
 
 <script>
 import { ref } from "vue";
-
+import productDB from "./../../base_datos/products.json";
 import CardInfo from "./CardInfo.vue";
-import { products } from "./../../baseDatos/products.js";
 
 export default {
   name: "PortalPujaComponent",
   setup() {
-    const productsAuction = ref(products);
+    const productsPuja = ref(productDB.products);
     const username = ref("");
 
     // Utilización de la API WebSocket
@@ -27,17 +26,11 @@ export default {
 
     // Definir un manejador de eventos WebSocket 'onmessage' para recibir mensajes del servidor.
     socket.onmessage = (event) => {
-      console.log(event);
-      const data = JSON.parse(event.data);
-      debugger; // eslint-disable-line no-debugger
-      const productPuja = productsAuction.value.find((product) => product.id === data.product.id);
-      productPuja.price = productPuja.price + 5;
-      //const message = JSON.parse(event.data);
-      //messages.value.push(event.data);
+      productsPuja.value = JSON.parse(event.data).products;
     };
 
     return {
-      productsAuction,
+      productsPuja,
       sendMessage,
     };
   },

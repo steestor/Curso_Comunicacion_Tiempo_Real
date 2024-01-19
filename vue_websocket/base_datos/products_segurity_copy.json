@@ -3,84 +3,84 @@
     {
       "id": 1,
       "name": "Viaje a Nueva York",
-      "srcImage": "./../src/assets/products/new-york.jpg",
+      "srcImage": "http://localhost:3000/images/new-york.jpg",
       "description": "Descripción del artículo, esto es una descripción de prueba para un viaje",
       "price": 12
     },
     {
       "id": 2,
       "name": "Viaje a Londres",
-      "srcImage": "./../src/assets/products/london.jpg",
+      "srcImage": "http://localhost:3000/images/london.jpg",
       "description": "Descripción del artículo, esto es una descripción de prueba para un viaje",
       "price": 22
     },
     {
       "id": 3,
       "name": "Viaje a París",
-      "srcImage": "./../src/assets/products/paris.jpg",
+      "srcImage": "http://localhost:3000/images/paris.jpg",
       "description": "Descripción del artículo, esto es una descripción de prueba para un viaje",
       "price": 16
     },
     {
       "id": 4,
       "name": "Viaje a Roma",
-      "srcImage": "./../src/assets/products/rome.jpg",
+      "srcImage": "http://localhost:3000/images/rome.jpg",
       "description": "Descripción del artículo, esto es una descripción de prueba para un viaje",
       "price": 20
     },
     {
       "id": 5,
       "name": "Viaje a Madrid",
-      "srcImage": "./../src/assets/products/madrid.jpg",
+      "srcImage": "http://localhost:3000/images/madrid.jpg",
       "description": "Descripción del artículo, esto es una descripción de prueba para un viaje",
       "price": 8
     },
     {
       "id": 6,
       "name": "Viaje a Barcelona",
-      "srcImage": "./../src/assets/products/barcelona.jpg",
+      "srcImage": "http://localhost:3000/images/barcelona.jpg",
       "description": "Descripción del artículo, esto es una descripción de prueba para un viaje",
       "price": 5
     },
     {
       "id": 7,
       "name": "Viaje a Berlín",
-      "srcImage": "./../src/assets/products/berlin.jpg",
+      "srcImage": "http://localhost:3000/images/berlin.jpg",
       "description": "Descripción del artículo, esto es una descripción de prueba para un viaje",
       "price": 3
     },
     {
       "id": 8,
       "name": "Viaje a Praga",
-      "srcImage": "./../src/assets/products/praga.jpg",
+      "srcImage": "http://localhost:3000/images/praga.jpg",
       "description": "Descripción del artículo, esto es una descripción de prueba para un viaje",
       "price": 12
     },
     {
       "id": 9,
       "name": "Viaje a Amsterdam",
-      "srcImage": "./../src/assets/products/amsterdam.jpg",
+      "srcImage": "http://localhost:3000/images/amsterdam.jpg",
       "description": "Descripción del artículo, esto es una descripción de prueba para un viaje",
       "price": 18
     },
     {
       "id": 10,
       "name": "Viaje a Budapest",
-      "srcImage": "./../src/assets/products/budapest.jpg",
+      "srcImage": "http://localhost:3000/images/budapest.jpg",
       "description": "Descripción del artículo, esto es una descripción de prueba para un viaje",
       "price": 6
     },
     {
       "id": 11,
       "name": "Viaje a Viena",
-      "srcImage": "./../src/assets/products/viena.jpg",
+      "srcImage": "http://localhost:3000/images/viena.jpg",
       "description": "Descripción del artículo, esto es una descripción de prueba para un viaje",
       "price": 15
     },
     {
       "id": 12,
       "name": "Viaje a Lisboa",
-      "srcImage": "./../src/assets/products/lisboa.jpg",
+      "srcImage": "http://localhost:3000/images/lisboa.jpg",
       "description": "Descripción del artículo, esto es una descripción de prueba para un viaje",
       "price": 14
     }

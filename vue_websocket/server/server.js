@@ -7,6 +7,9 @@ const WebSocket = require("ws");
 // Crear una instancia de aplicación Express
 const app = express();
 
+// Proveer las imagenes de los productos desde el back
+app.use("/images", express.static("./../src/assets/products"));
+
 // Crear un servidor HTTP utilizando la instancia de aplicación Express
 const server = http.createServer(app);
 
@@ -25,22 +28,24 @@ websocketServer.on("connection", (socket) => {
 
   // Escucha de mensajes WebSocket entrantes
   socket.on("message", (data) => {
-    // Transmitir el mensaje a todos los clientes conectados
-    test(data.product);
+    //modificar fichero de datos
+    const newData = getDataModified(JSON.parse(data).product);
 
+    // Transmitir el mensaje a todos los clientes conectados
     websocketServer.clients.forEach(function each(client) {
       //if (client !== socket && client.readyState === WebSocket.OPEN) {
 
       if (client.readyState === WebSocket.OPEN) {
-        client.send(data);
+        client.send(newData);
       }
     });
   });
 
-  function test(product) {
+  function getDataModified(product) {
     // Leer el contenido del archivo JSON
-    const contenido = fs.readFileSync("./../baseDatos/products.json");
+    const contenido = fs.readFileSync("./../base_datos/products.json", { encoding: "utf8" });
     // Convertir el contenido a un objeto JavaScript
+
     const datos = JSON.parse(contenido);
     const productPuja = datos.products.find((p) => p.id === product.id);
     productPuja.price = productPuja.price + 5;
@@ -49,9 +54,9 @@ websocketServer.on("connection", (socket) => {
 
     // Convertir el objeto modificado de nuevo a JSON
     const nuevoContenido = JSON.stringify(datos);
+    fs.writeFileSync("./../base_datos/products.json", nuevoContenido);
 
-    console.log(nuevoContenido);
-    fs.writeFileSync("./../baseDatos/products.json", nuevoContenido, "utf8");
+    return nuevoContenido;
   }
 
   // Listen for WebSocket connection close events

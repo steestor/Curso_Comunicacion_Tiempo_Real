@@ -36,6 +36,7 @@ export default {
   },
   emits: ["sendMessage"],
   setup(props, { emit }) {
+    // Cuando se hace click en "Pujar"
     function sendMessage(product) {
       emit("sendMessage", product);
     }
