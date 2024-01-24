@@ -52,7 +52,7 @@
       <div
         [style]="{
           overflowY: 'scroll',
-          height: '445px',
+          height: '70%',
           marginBotton: '10px'
         }"
       >
@@ -86,10 +86,7 @@
           ></dx-text-box>
         </div>
         <div class="col-3">
-          <dx-button
-            (click)="sendMessage($event, messageBox)"
-            text="Enviar"
-          ></dx-button>
+          <dx-button (click)="sendMessage()" text="Enviar"></dx-button>
         </div>
       </div>
     </div>

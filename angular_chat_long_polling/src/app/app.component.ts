@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { Component, ViewChild, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 import {
@@ -30,7 +30,7 @@ import { avataresFemale, avataresMale } from './data/avatar';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   private http = inject(HttpClient);
   @ViewChild('messageBox') messageBox!: DxTextBoxComponent;
 
@@ -41,10 +41,6 @@ export class AppComponent implements OnInit {
   avatarSrc = '';
   user = '';
   urlBaseBack = 'http://localhost:3000/';
-
-  ngOnInit() {
-    this.prepareVariables();
-  }
 
   initChat() {
     this.initPage = false;
@@ -83,11 +79,7 @@ export class AppComponent implements OnInit {
       });
   }
 
-  private prepareVariables() {
-    //this.avatarSrc = avatares[Math.floor(Math.random() * avatares.length)];
-  }
-
-  sendMessage(e: any, messageBox: any) {
+  sendMessage() {
     if (this.newMessage) {
       this.http
         .post(this.urlBaseBack + 'sendMessage', {

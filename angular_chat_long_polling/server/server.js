@@ -36,8 +36,8 @@ app.get("/messages", cors(corsOption), (req, res) => {
     }
   };
 
-  // Se invoca inmediatamente después de definir la función, 
-  // lo que significa que intentará enviar mensajes disponibles 
+  // Se invoca inmediatamente después de definir la función,
+  // lo que significa que intentará enviar mensajes disponibles
   // tan pronto como alguien se suscriba.
   waitForMessages();
 });
@@ -55,7 +55,7 @@ app.post("/sendMessage", express.json(), (req, res) => {
   const { message } = req.body;
   messages.push(message);
 
-  console.log("Messages: ", messages);
+  //console.log("Messages: ", messages);
   subscribers.forEach((resSubs) => {
     resSubs.send({ messages });
   });
