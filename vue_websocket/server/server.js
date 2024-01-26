@@ -3,6 +3,8 @@ const express = require("express");
 const http = require("http");
 const fs = require("fs");
 const WebSocket = require("ws");
+const events = require("./../events");
+const listOfUsers = [];
 
 // Crear una instancia de aplicación Express
 const app = express();
@@ -27,41 +29,72 @@ websocketServer.on("connection", (socket) => {
   console.log("cliente conectado.");
 
   // Escucha de mensajes WebSocket entrantes
-  socket.on("message", (data) => {
-    //modificar fichero de datos
-    const newData = getDataModified(JSON.parse(data).product);
+  socket.on("message", (e) => {
+    const data = JSON.parse(e);
 
-    // Transmitir el mensaje a todos los clientes conectados
-    websocketServer.clients.forEach(function each(client) {
-      //if (client !== socket && client.readyState === WebSocket.OPEN) {
-
-      if (client.readyState === WebSocket.OPEN) {
-        client.send(newData);
-      }
-    });
+    if (data.eventName === events.MODIFY_PUJA) {
+      modifyPuja(data);
+    } else if (data.eventName === events.ADD_USERS) {
+      saveUsersLogued(data);
+    } else if (data.eventName === events.CLOSE_CLIENT) {
+      closeClients(data);
+    }
   });
-
-  function getDataModified(product) {
-    // Leer el contenido del archivo JSON
-    const contenido = fs.readFileSync("./../base_datos/products.json", { encoding: "utf8" });
-    // Convertir el contenido a un objeto JavaScript
-
-    const datos = JSON.parse(contenido);
-    const productPuja = datos.products.find((p) => p.id === product.id);
-    productPuja.price = productPuja.price + 5;
-
-    console.log(productPuja.price);
-
-    // Convertir el objeto modificado de nuevo a JSON
-    const nuevoContenido = JSON.stringify(datos);
-    fs.writeFileSync("./../base_datos/products.json", nuevoContenido);
-
-    return nuevoContenido;
-  }
 
   // Listen for WebSocket connection close events
   socket.on("close", () => {
-    // Log a message when a client disconnects
-    console.log("Client disconnected");
+    if (websocketServer.clients.length === 0) {
+      listOfUsers = [];
+    }
   });
 });
+
+function saveUsersLogued(data) {
+  listOfUsers.push(data.username);
+
+  websocketServer.clients.forEach(function each(client) {
+    if (client.readyState === WebSocket.OPEN) {
+      client.send(JSON.stringify({ users: listOfUsers, eventName: events.ADD_USERS }));
+    }
+  });
+}
+
+function closeClients(data) {
+  const newListOfUsers = listOfUsers.filter((username) => username !== data.username);
+
+  websocketServer.clients.forEach(function each(client) {
+    if (client.readyState === WebSocket.OPEN) {
+      client.send(JSON.stringify({ users: newListOfUsers, eventName: events.ADD_USERS }));
+    }
+  });
+}
+
+function modifyPuja(data) {
+  // Modificar fichero de datos
+  const newData = getDataModified(data.product);
+
+  // Transmitir el mensaje a todos los clientes conectados
+  websocketServer.clients.forEach(function each(client) {
+    //if (client !== socket && client.readyState === WebSocket.OPEN) {
+
+    if (client.readyState === WebSocket.OPEN) {
+      client.send(JSON.stringify({ data: newData, eventName: events.MODIFY_PUJA }));
+    }
+  });
+}
+
+function getDataModified(product) {
+  // Leer el contenido del archivo JSON
+  const contenido = fs.readFileSync("./../base_datos/products.json", { encoding: "utf8" });
+  // Convertir el contenido a un objeto JavaScript
+
+  const datos = JSON.parse(contenido);
+  const productPuja = datos.products.find((p) => p.id === product.id);
+  productPuja.price = productPuja.price + 5;
+
+  // Convertir el objeto modificado de nuevo a JSON
+  const nuevoContenido = JSON.stringify(datos);
+  fs.writeFileSync("./../base_datos/products.json", nuevoContenido);
+
+  return nuevoContenido;
+}

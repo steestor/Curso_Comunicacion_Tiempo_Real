@@ -25,6 +25,7 @@
 
 <script>
 import { DxButton } from "devextreme-vue/button";
+import { SendMessage } from "./../../events-vue-componets";
 
 export default {
   name: "CardInfoComponent",
@@ -34,11 +35,11 @@ export default {
       required: true,
     },
   },
-  emits: ["sendMessage"],
+  emits: [SendMessage],
   setup(props, { emit }) {
     // Cuando se hace click en "Pujar"
     function sendMessage(product) {
-      emit("sendMessage", product);
+      emit(SendMessage, product);
     }
 
     return {

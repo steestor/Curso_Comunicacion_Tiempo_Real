@@ -1,0 +1,9 @@
+const MODIFY_PUJA = "MODIFY_PUJA";
+const ADD_USERS = "ADD_USERS";
+const CLOSE_CLIENT = "CLOSE_CLIENT";
+
+module.exports = {
+  MODIFY_PUJA,
+  ADD_USERS,
+  CLOSE_CLIENT,
+};
