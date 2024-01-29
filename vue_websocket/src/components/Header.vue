@@ -14,7 +14,7 @@
     <div class="col title-web">Puja de viajes</div>
   </div>
 
-  <ChatCard v-if="openChat" :userTo="userTo"></ChatCard>
+  <ChatCard v-if="openChat" :userTo="userTo" :username="username"></ChatCard>
 </template>
 
 <script>
@@ -32,12 +32,11 @@ export default {
       type: Array,
     },
   },
-  setup(props, { emit }) {
+  setup() {
     const openChat = ref(false);
     const userTo = ref("");
 
     function onItemClick(e) {
-      debugger;
       userTo.value = e.itemData;
       openChat.value = true;
     }

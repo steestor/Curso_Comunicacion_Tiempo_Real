@@ -1,6 +1,6 @@
 <template>
   <div v-for="(product, index) in productsPuja" :key="index" class="d-inline-block justify-content-center">
-    <CardInfo :product="product" @sendMessage="sendMessage"></CardInfo>
+    <CardInfo :product="product" @sendMessage="sendMessageFromButtonPuja"></CardInfo>
   </div>
 </template>
 
@@ -9,7 +9,7 @@ import { computed, ref, watch } from "vue";
 import productDB from "./../../base_datos/products.json";
 import CardInfo from "./CardInfo.vue";
 import events from "./../../events";
-import { ListOfUsers } from "./../../events-vue-componets";
+import webSocketService from "./../shared/ws";
 
 export default {
   name: "PortalPujaComponent",
@@ -18,44 +18,36 @@ export default {
       type: String,
     },
   },
-  emits: [ListOfUsers],
-  setup(props, { emit }) {
+  setup(props) {
     const productsPuja = ref(productDB.products);
     const username = computed(() => props.username);
-
-    // Utilización de la API WebSocket
-    const socket = new WebSocket("ws://localhost:3000");
+    const { sendMessage, onMessage } = webSocketService();
 
     // Guardamos en el server cada usuario que se loguea
     watch(username, () => {
-      socket.send(JSON.stringify({ eventName: events.ADD_USERS, username: username.value }));
+      sendMessage({ eventName: events.ADD_USERS, username: username.value });
     });
 
-    // Enviar datos al servidor mediante WebSockets
-    function sendMessage(product) {
-      const messageData = { eventName: events.MODIFY_PUJA, username: username.value, product: product };
-      socket.send(JSON.stringify(messageData));
+    // Enviar datos al servidor de una nueva puja
+    function sendMessageFromButtonPuja(product) {
+      sendMessage({ eventName: events.MODIFY_PUJA, username: username.value, product: product });
     }
 
-    // Definir un manejador de eventos WebSocket 'onmessage' para recibir mensajes del servidor.
-    socket.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      if (data.eventName === events.MODIFY_PUJA) {
-        productsPuja.value = JSON.parse(data).products;
-      } else if (data.eventName === events.ADD_USERS) {
-        console.log("Usuarios", data.users);
-        console.log("UserName", username.value);
-        emit(ListOfUsers, data.users);
+    // Recibir datos del servidor
+    onMessage((msg) => {
+      if (msg.eventName === events.MODIFY_PUJA) {
+        productsPuja.value = msg.data;
       }
-    };
+    });
 
+    // Revisar cuando se cierra la ventana del navegador para desloguear al usuario de esa sesión
     window.addEventListener("beforeunload", () => {
-      socket.send(JSON.stringify({ eventName: events.CLOSE_CLIENT, username: username.value }));
+      sendMessage({ eventName: events.CLOSE_CLIENT, username: username.value });
     });
 
     return {
       productsPuja,
-      sendMessage,
+      sendMessageFromButtonPuja,
     };
   },
   components: {

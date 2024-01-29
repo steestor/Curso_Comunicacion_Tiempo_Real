@@ -11,7 +11,7 @@
           <div class="row">En línea</div>
         </div>
         <div class="col-auto">
-          <DxButtton icon="close"></DxButtton>
+          <DxButton icon="close"></DxButton>
         </div>
       </div>
       <div class="body-chat">
@@ -25,10 +25,10 @@
         <!-- Zona de escritura de mensajes -->
         <div class="row mt-2">
           <div class="col">
-            <DxTextBox value=""></DxTextBox>
+            <DxTextBox v-model="messageChat" @enterKey="sendMessageTo()"></DxTextBox>
           </div>
           <div class="col-auto">
-            <DxButton icon="mdi mdi-send"></DxButton>
+            <DxButton icon="mdi mdi-send" @click="sendMessageTo()"></DxButton>
           </div>
         </div>
       </div>
@@ -41,6 +41,9 @@
 import { DxButton } from "devextreme-vue/button";
 import { avatares } from "./../assets/avatar/avatar";
 import { DxTextBox } from "devextreme-vue/text-box";
+import events from "./../../events";
+import webSocketService from "./../shared/ws";
+import { ref } from "vue";
 
 export default {
   name: "ChatCard",
@@ -48,12 +51,36 @@ export default {
     userTo: {
       type: String,
     },
+    username: {
+      type: String,
+    },
   },
-  setup() {
+  setup(props) {
     const avatar = avatares[Math.floor(Math.random() * avatares.length)];
+    const { sendMessage, onMessage } = webSocketService();
+    const messageChat = ref("");
+
+    function sendMessageTo() {
+      sendMessage({
+        eventName: events.SEND_PRIVATE_MESSAGE,
+        message: messageChat.value,
+        userTo: props.userTo,
+        userFrom: props.username,
+      });
+    }
+
+    onMessage((msg) => {
+      debugger;
+      console.log("EOOOOOOOOO");
+      if (msg.eventName === events.SEND_PRIVATE_MESSAGE) {
+        alert(msg);
+      }
+    });
 
     return {
       avatar,
+      sendMessageTo,
+      messageChat,
     };
   },
   components: {

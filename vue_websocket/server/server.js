@@ -5,6 +5,7 @@ const fs = require("fs");
 const WebSocket = require("ws");
 const events = require("./../events");
 const listOfUsers = [];
+const clientsServer = new Map();
 
 // Crear una instancia de aplicación Express
 const app = express();
@@ -35,22 +36,34 @@ websocketServer.on("connection", (socket) => {
     if (data.eventName === events.MODIFY_PUJA) {
       modifyPuja(data);
     } else if (data.eventName === events.ADD_USERS) {
-      saveUsersLogued(data);
+      saveUsersLogued(data, socket);
     } else if (data.eventName === events.CLOSE_CLIENT) {
       closeClients(data);
+    } else if (data.eventName === events.SEND_PRIVATE_MESSAGE) {
+      privateMessage(data);
     }
   });
 
   // Listen for WebSocket connection close events
   socket.on("close", () => {
+    console.log("cliente desconectado.");
     if (websocketServer.clients.length === 0) {
       listOfUsers = [];
     }
   });
 });
 
-function saveUsersLogued(data) {
+function privateMessage(data) {
+  websocketServer.clients.forEach(function each(client) {
+    if (client.readyState === WebSocket.OPEN) {
+      client.send(JSON.stringify({ data: data, eventName: events.SEND_PRIVATE_MESSAGE }));
+    }
+  });
+}
+
+function saveUsersLogued(data, socket) {
   listOfUsers.push(data.username);
+  clientsServer.set(data.username, socket);
 
   websocketServer.clients.forEach(function each(client) {
     if (client.readyState === WebSocket.OPEN) {
@@ -78,7 +91,7 @@ function modifyPuja(data) {
     //if (client !== socket && client.readyState === WebSocket.OPEN) {
 
     if (client.readyState === WebSocket.OPEN) {
-      client.send(JSON.stringify({ data: newData, eventName: events.MODIFY_PUJA }));
+      client.send(JSON.stringify({ data: newData.products, eventName: events.MODIFY_PUJA }));
     }
   });
 }
@@ -96,5 +109,5 @@ function getDataModified(product) {
   const nuevoContenido = JSON.stringify(datos);
   fs.writeFileSync("./../base_datos/products.json", nuevoContenido);
 
-  return nuevoContenido;
+  return datos;
 }

@@ -10,7 +10,7 @@
 
     <!-- Cards de pujas de viajes -->
     <div class="text-center">
-      <PortalPuja :username="username" @ListOfUsers="getUsers($event)"></PortalPuja>
+      <PortalPuja :username="username"></PortalPuja>
     </div>
   </div>
 </template>
@@ -22,6 +22,8 @@ import { ref } from "vue";
 import PortalPuja from "./components/PortalPuja.vue";
 import Credentials from "./components/Credentials.vue";
 import Header from "./components/Header.vue";
+import webSocketService from "./shared/ws";
+import events from "./../events";
 
 export default {
   name: "App",
@@ -29,25 +31,29 @@ export default {
     const initPage = ref(true);
     const username = ref("");
     const listOfUsers = ref([]);
+    const { onMessage } = webSocketService();
 
     function usernameChanged(e) {
       username.value = e.value;
     }
 
+    // Cerramos el popup de credenciales y indicamos que usuario se ha conectado
     function initChat(e) {
       username.value = e.value;
       initPage.value = false;
     }
 
-    function getUsers(users) {
-      listOfUsers.value = users.filter((userName) => userName !== username.value);
-    }
+    // Actualizamos la lista de usuarios conectados a partir de los datos del server
+    onMessage((msg) => {
+      if (msg.eventName === events.ADD_USERS) {
+        listOfUsers.value = msg.users.filter((userName) => userName !== username.value);
+      }
+    });
 
     return {
       initPage,
       username,
       listOfUsers,
-      getUsers,
       usernameChanged,
       initChat,
     };
