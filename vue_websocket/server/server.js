@@ -32,6 +32,7 @@ websocketServer.on("connection", (socket) => {
   // Escucha de mensajes WebSocket entrantes
   socket.on("message", (e) => {
     const data = JSON.parse(e);
+    console.log()
 
     if (data.eventName === events.MODIFY_PUJA) {
       modifyPuja(data);
