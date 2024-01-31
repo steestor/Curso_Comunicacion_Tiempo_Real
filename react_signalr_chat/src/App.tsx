@@ -23,7 +23,7 @@ function App() {
       });
 
       connection.on("ReceiveSpecificMessage", (userName: string, msg) => {
-setMessages(messages => [...messages, msg]);
+        setMessages(messages => [...messages, msg]);
       });
 
       await connection.start();

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace AplicacionChatSignalR.Hubs
 {
-    public class ChatHub: Hub
+    public class ChatHub : Hub
     {
 
         private readonly SharedDb _sharedDb;
@@ -31,7 +31,7 @@ namespace AplicacionChatSignalR.Hubs
 
         public async Task SendMessage(string message)
         {
-            if(_sharedDb.Connections.TryGetValue(Context.ConnectionId, out UserConnection connection))
+            if (_sharedDb.Connections.TryGetValue(Context.ConnectionId, out UserConnection connection))
             {
                 await Clients.Group(connection.ChatRoom).SendAsync("Recesive message", connection.Username, message);
             }
