@@ -40,9 +40,9 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
-            "Microsoft.AspNet.SignalR": {
+            "Microsoft.AspNetCore.SignalR.Common": {
               "target": "Package",
-              "version": "[2.4.3, )"
+              "version": "[8.0.1, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",

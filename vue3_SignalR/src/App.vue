@@ -9,10 +9,19 @@
       <div class="col-auto">{{ numUsers }}</div>
     </div>
   </div>
+  <div class="row mt-4">
+    <div class="col-auto">
+      <DxTextBox :value="textValue"></DxTextBox>
+    </div>
+    <div class="col-auto">
+      <DxButton @click="ClickToSend" text="Enviar al back"></DxButton>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
 import * as signalR from "@microsoft/signalr";
+import { DxButton, DxTextBox } from "devextreme-vue";
 import { ref } from "vue";
 
 export default {
@@ -20,24 +29,36 @@ export default {
   setup() {
     const numViews = ref(0);
     const numUsers = ref(0);
+    const textValue = ref("No lo entiendo");
 
     // Crear la conexión al Hub del back
     const connection = new signalR.HubConnectionBuilder()
-      .withUrl("https://localhost:7222/notificationsHub", signalR.HttpTransportType.WebSockets)
+      .withUrl("https://localhost:7222/notificationsHub")
+      .configureLogging(signalR.LogLevel.Trace)
       .build();
 
     // Conectarse a los métodos invocados por el hub "X" y recibir notificaciones del hub "X"
-    connection.on("UpdateTotalViews", (totalViews) => {
+    connection.on("UpdateTotalViews", (totalViews: number) => {
       // Actualizar el número de visitas
       numViews.value = totalViews;
     });
 
-    connection.on("UpdateTotalUsers", (totalUsers) => {
+    connection.on("UpdateTotalUsers", (totalUsers: number) => {
       // Actualizar el número de usuarios
       numUsers.value = totalUsers;
     });
 
-    // Invocar métodos del hub "X" enviar notificación al hub
+    connection.on("NoLoEntiendo", (msg: any) => {
+      console.log(msg);
+      textValue.value = msg;
+      debugger;
+    });
+
+    // Cuando se pulsa el botón "Enviar al back" enviar notificación al hub "X
+    function ClickToSend() {
+      connection.send("NoLoEntiendo", textValue.value);
+    }
+
     function newView() {
       connection.send("NewWindowLoaded");
       // connection.invoke("NewWindowLoaded").then((res) => {
@@ -45,6 +66,10 @@ export default {
       // }).catch((err) => {
       //   console.log(err);
       // })
+    }
+
+    function onConnectionStarted() {
+      newView();
     }
 
     // Empezar la conexión al hub "X"
@@ -58,17 +83,14 @@ export default {
         console.log("Error al conectar al hub", err);
       });
 
-    function onConnectionStarted() {
-      // Invocar métodos del hub "X" enviar notificación al hub
-      newView();
-    }
-
     return {
       numViews,
       numUsers,
+      textValue,
+      ClickToSend,
     };
   },
-  components: {},
+  components: { DxTextBox, DxButton },
 };
 </script>
 

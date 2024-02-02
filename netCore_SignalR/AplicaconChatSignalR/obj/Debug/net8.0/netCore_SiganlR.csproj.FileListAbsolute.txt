@@ -45,14 +45,7 @@ C:\Proyectos\Curso_Comunicación_Tiempo_Real\netCore_SignalR\AplicaconChatSignal
 C:\Proyectos\Curso_Comunicación_Tiempo_Real\netCore_SignalR\AplicaconChatSignalR\bin\Debug\net8.0\netCore_SiganlR.runtimeconfig.json
 C:\Proyectos\Curso_Comunicación_Tiempo_Real\netCore_SignalR\AplicaconChatSignalR\bin\Debug\net8.0\netCore_SiganlR.dll
 C:\Proyectos\Curso_Comunicación_Tiempo_Real\netCore_SignalR\AplicaconChatSignalR\bin\Debug\net8.0\netCore_SiganlR.pdb
-C:\Proyectos\Curso_Comunicación_Tiempo_Real\netCore_SignalR\AplicaconChatSignalR\bin\Debug\net8.0\Microsoft.AspNet.SignalR.Core.dll
-C:\Proyectos\Curso_Comunicación_Tiempo_Real\netCore_SignalR\AplicaconChatSignalR\bin\Debug\net8.0\Microsoft.AspNet.SignalR.SystemWeb.dll
 C:\Proyectos\Curso_Comunicación_Tiempo_Real\netCore_SignalR\AplicaconChatSignalR\bin\Debug\net8.0\Microsoft.OpenApi.dll
-C:\Proyectos\Curso_Comunicación_Tiempo_Real\netCore_SignalR\AplicaconChatSignalR\bin\Debug\net8.0\Microsoft.Owin.dll
-C:\Proyectos\Curso_Comunicación_Tiempo_Real\netCore_SignalR\AplicaconChatSignalR\bin\Debug\net8.0\Microsoft.Owin.Host.SystemWeb.dll
-C:\Proyectos\Curso_Comunicación_Tiempo_Real\netCore_SignalR\AplicaconChatSignalR\bin\Debug\net8.0\Microsoft.Owin.Security.dll
-C:\Proyectos\Curso_Comunicación_Tiempo_Real\netCore_SignalR\AplicaconChatSignalR\bin\Debug\net8.0\Newtonsoft.Json.dll
-C:\Proyectos\Curso_Comunicación_Tiempo_Real\netCore_SignalR\AplicaconChatSignalR\bin\Debug\net8.0\Owin.dll
 C:\Proyectos\Curso_Comunicación_Tiempo_Real\netCore_SignalR\AplicaconChatSignalR\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Proyectos\Curso_Comunicación_Tiempo_Real\netCore_SignalR\AplicaconChatSignalR\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Proyectos\Curso_Comunicación_Tiempo_Real\netCore_SignalR\AplicaconChatSignalR\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
@@ -78,3 +71,7 @@ C:\Proyectos\Curso_Comunicación_Tiempo_Real\netCore_SignalR\AplicaconChatSignal
 C:\Proyectos\Curso_Comunicación_Tiempo_Real\netCore_SignalR\AplicaconChatSignalR\obj\Debug\net8.0\netCore_SiganlR.pdb
 C:\Proyectos\Curso_Comunicación_Tiempo_Real\netCore_SignalR\AplicaconChatSignalR\obj\Debug\net8.0\netCore_SiganlR.genruntimeconfig.cache
 C:\Proyectos\Curso_Comunicación_Tiempo_Real\netCore_SignalR\AplicaconChatSignalR\obj\Debug\net8.0\ref\netCore_SiganlR.dll
+C:\Proyectos\Curso_Comunicación_Tiempo_Real\netCore_SignalR\AplicaconChatSignalR\bin\Debug\net8.0\Microsoft.AspNetCore.Connections.Abstractions.dll
+C:\Proyectos\Curso_Comunicación_Tiempo_Real\netCore_SignalR\AplicaconChatSignalR\bin\Debug\net8.0\Microsoft.AspNetCore.SignalR.Common.dll
+C:\Proyectos\Curso_Comunicación_Tiempo_Real\netCore_SignalR\AplicaconChatSignalR\bin\Debug\net8.0\Microsoft.Extensions.Features.dll
+C:\Proyectos\Curso_Comunicación_Tiempo_Real\netCore_SignalR\AplicaconChatSignalR\bin\Debug\net8.0\Microsoft.Extensions.Options.dll

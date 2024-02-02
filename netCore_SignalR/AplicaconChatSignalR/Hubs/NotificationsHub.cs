@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
+using netCore_SiganlR.Hubs.Filtros;
 
 namespace AplicacionChatSignalR.Hubs
 {
@@ -39,5 +41,19 @@ namespace AplicacionChatSignalR.Hubs
         //    await Clients.All.SendAsync("UpdateTotalViews", TotalViews);
         //    return $"Total de vistas: {TotalViews}";
         //}
+
+        // Método que se ejecuta cuando se escribe un mensaje y se pulsa en enviar
+        [ServiceFilter(typeof(ReplaceNoEntiendoFilter))]
+        public async Task NoLoEntiendo(string message)
+        {
+            await Clients.All.SendAsync("NoLoEntiendo", message);
+
+            await Clients.Group("grupo").SendAsync("NoLoEntiendo", message);
+            await Clients.Groups("grupo1", "grupo2").SendAsync("NoLoEntiendo", message);
+            await Clients.GroupExcept("grupo", "grupo").SendAsync("NoLoEntiendo", message);
+            await Clients.OthersInGroup("grupo").SendAsync("NoLoEntiendo", message);
+
+        }
+
     }
 }
