@@ -48,11 +48,6 @@ namespace AplicacionChatSignalR.Hubs
         {
             await Clients.All.SendAsync("NoLoEntiendo", message);
 
-            await Clients.Group("grupo").SendAsync("NoLoEntiendo", message);
-            await Clients.Groups("grupo1", "grupo2").SendAsync("NoLoEntiendo", message);
-            await Clients.GroupExcept("grupo", "grupo").SendAsync("NoLoEntiendo", message);
-            await Clients.OthersInGroup("grupo").SendAsync("NoLoEntiendo", message);
-
         }
 
     }
