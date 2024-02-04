@@ -32,7 +32,6 @@ websocketServer.on("connection", (socket) => {
   // Escucha de mensajes WebSocket entrantes
   socket.on("message", (e) => {
     const data = JSON.parse(e);
-    console.log()
 
     if (data.eventName === events.MODIFY_PUJA) {
       modifyPuja(data);
@@ -89,8 +88,6 @@ function modifyPuja(data) {
 
   // Transmitir el mensaje a todos los clientes conectados
   websocketServer.clients.forEach(function each(client) {
-    //if (client !== socket && client.readyState === WebSocket.OPEN) {
-
     if (client.readyState === WebSocket.OPEN) {
       client.send(JSON.stringify({ data: newData.products, eventName: events.MODIFY_PUJA }));
     }
