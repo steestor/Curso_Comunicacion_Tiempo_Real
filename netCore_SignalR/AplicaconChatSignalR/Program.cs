@@ -1,8 +1,6 @@
 using AplicacionChatSignalR.Hubs;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
-using Microsoft.EntityFrameworkCore;
-using netCore_SiganlR.EntityFramework;
+using netCore_SiganlR.Hubs;
 using netCore_SiganlR.Hubs.Filtros;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -44,5 +42,6 @@ app.UseCors("SignalRCors");
 app.MapControllers();
 
 app.MapHub<NotificationsHub>("/notificationsHub");
+app.MapHub<TareasHub>("/tareasHub");
 
 app.Run();

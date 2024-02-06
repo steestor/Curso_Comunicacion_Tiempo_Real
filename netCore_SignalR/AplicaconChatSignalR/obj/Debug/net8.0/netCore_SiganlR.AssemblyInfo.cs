@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("netCore_SiganlR")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+060a8be317278922e5c21113a23d6096d8a57e04")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+036a6988428dbd6c63c55e617cc399ad25c2ce89")]
 [assembly: System.Reflection.AssemblyProductAttribute("netCore_SiganlR")]
 [assembly: System.Reflection.AssemblyTitleAttribute("netCore_SiganlR")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

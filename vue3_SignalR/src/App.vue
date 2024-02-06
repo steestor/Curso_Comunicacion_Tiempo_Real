@@ -32,10 +32,7 @@ export default {
     const textValue = ref("No lo entiendo");
 
     // Crear la conexión al Hub del back
-    const connection = new signalR.HubConnectionBuilder()
-      .withUrl("https://localhost:7222/notificationsHub")
-      .configureLogging(signalR.LogLevel.Trace)
-      .build();
+    const connection = new signalR.HubConnectionBuilder().withUrl("https://localhost:7222/notificationsHub").build();
 
     // Conectarse a los métodos invocados por el hub "X" y recibir notificaciones del hub "X"
     connection.on("UpdateTotalViews", (totalViews: number) => {
