@@ -1,27 +1,78 @@
-# ChatLongPolling
+# Chat con Long Polling en Angular
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.10.
+Aplicación de chat en tiempo real utilizando Angular y técnica de Long Polling para la comunicación.
 
-## Development server
+## Demostración en vivo
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Puedes ver la aplicación funcionando en GitHub Pages: [https://tu-usuario.github.io/angular-chat-long-polling/](https://tu-usuario.github.io/angular-chat-long-polling/)
 
-## Code scaffolding
+## Características
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- Chat en tiempo real usando Long Polling
+- Interfaz de usuario con Angular 17
+- Servidor Node.js simple para manejar la comunicación
+- Estilos con Bootstrap y DevExtreme
 
-## Build
+## Instalación
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+```bash
+# Clonar el repositorio
+git clone https://github.com/tu-usuario/angular-chat-long-polling.git
+cd angular-chat-long-polling
 
-## Running unit tests
+# Instalar dependencias
+npm install
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Uso
 
-## Running end-to-end tests
+Para iniciar tanto el servidor como la aplicación Angular, debes ejecutar los siguientes comandos en terminales separadas:
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+```bash
+# Terminal 1: Iniciar el servidor de Node.js (requiere nodemon instalado)
+cd server
+nodemon server.js  # O node server.js si no tienes nodemon
 
-## Further help
+# Terminal 2: Iniciar la aplicación Angular
+npm start
+```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+La aplicación estará disponible en `http://127.0.0.1:4200/` y el servidor en `http://localhost:3000/`.
+
+## Cómo funciona el Long Polling
+
+1. El cliente hace una solicitud al servidor y mantiene la conexión abierta
+2. El servidor espera hasta que haya un nuevo mensaje disponible
+3. Cuando hay un mensaje, el servidor responde y la conexión se cierra
+4. El cliente inmediatamente abre una nueva conexión
+5. Este ciclo proporciona una experiencia en "tiempo real" sin usar WebSockets
+
+## Desarrollado con
+
+- [Angular](https://angular.io/) - Framework frontend
+- [Express](https://expressjs.com/) - Framework Node.js para el servidor
+- [Bootstrap](https://getbootstrap.com/) - Framework CSS
+- [DevExtreme](https://js.devexpress.com/) - Componentes UI
+
+## Estructura del proyecto
+
+- `/src` - Código fuente de la aplicación Angular
+- `/server` - Servidor Express para manejar mensajes
+- `/.github/workflows` - Configuración para despliegue automático en GitHub Pages
+
+## Desarrollo
+
+```bash
+# Generar un nuevo componente
+ng generate component nombre-componente
+
+# Ejecutar pruebas unitarias
+ng test
+
+# Construir el proyecto para producción
+ng build
+```
+
+## Licencia
+
+Este proyecto está bajo la Licencia MIT - ver el archivo LICENSE para más detalles.

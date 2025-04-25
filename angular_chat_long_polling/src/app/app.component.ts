@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, ViewChild, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
+import { environment } from '../environments/environment';
 import {
   DxButtonModule,
   DxPopupModule,
@@ -40,7 +41,7 @@ export class AppComponent {
   newMessage = '';
   avatarSrc = '';
   user = '';
-  urlBaseBack = 'http://localhost:3000/';
+  urlBaseBack = environment.apiUrl + '/';
 
   initChat() {
     this.initPage = false;
